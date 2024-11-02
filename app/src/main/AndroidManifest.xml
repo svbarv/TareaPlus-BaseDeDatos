@@ -13,6 +13,21 @@
         android:theme="@style/Theme.TareaPlus"
         tools:targetApi="31">
         <activity
+            android:name=".EditarTarea"
+            android:exported="false" />
+        <activity
+            android:name=".LeerTarea"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity2"
+            android:exported="false" />
+        <activity
+            android:name=".Leer"
+            android:exported="false" />
+        <activity
+            android:name=".UsuarioRegistrados"
+            android:exported="false" />
+        <activity
             android:name=".ListaTareas"
             android:exported="false" />
         <activity

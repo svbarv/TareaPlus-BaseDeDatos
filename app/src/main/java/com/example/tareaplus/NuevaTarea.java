@@ -1,6 +1,9 @@
 package com.example.tareaplus;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +21,7 @@ public class NuevaTarea extends AppCompatActivity {
     EditText tituloEditText, motivoEditText;
     Button guardarButton, horaButton;
     String horaSeleccionada;
+    SQLiteOpenHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +34,22 @@ public class NuevaTarea extends AppCompatActivity {
         motivoEditText = findViewById(R.id.motivoEditText);
         guardarButton = findViewById(R.id.guardarButton);
         horaButton = findViewById(R.id.horaButton);
+
+        // Inicializar el helper de base de datos
+        dbHelper = new SQLiteOpenHelper(this, "TareaPlus.db", null, 1) {
+            @Override
+            public void onCreate(SQLiteDatabase db) {
+                // Crear tabla si no existe
+                String createTable = "CREATE TABLE IF NOT EXISTS Tareas (Titulo TEXT, Motivo TEXT, Hora TEXT, Fecha TEXT)";
+                db.execSQL(createTable);
+            }
+
+            @Override
+            public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+                db.execSQL("DROP TABLE IF EXISTS Tareas");
+                onCreate(db);
+            }
+        };
 
         // Obtener la fecha seleccionada de la actividad anterior
         String selectedDate = getIntent().getStringExtra("selectedDate");
@@ -58,18 +78,34 @@ public class NuevaTarea extends AppCompatActivity {
         guardarButton.setOnClickListener(v -> {
             String titulo = tituloEditText.getText().toString();
             String motivo = motivoEditText.getText().toString();
+            String fecha = selectedDate; // Obtener la fecha seleccionada
 
             if (titulo.isEmpty() || motivo.isEmpty() || horaSeleccionada == null) {
                 Toast.makeText(NuevaTarea.this, "Por favor, llena todos los campos", Toast.LENGTH_SHORT).show();
             } else {
-                // Enviar los datos a la actividad ListaTareas
-                Intent intent = new Intent(NuevaTarea.this, ListaTareas.class);
-                intent.putExtra("titulo", titulo);
-                intent.putExtra("motivo", motivo);
-                intent.putExtra("fecha", selectedDate);
-                intent.putExtra("hora", horaSeleccionada);
-                startActivity(intent);
+                // Guardar tarea en la base de datos
+                guardarTarea(titulo, motivo, horaSeleccionada, fecha);
             }
         });
+    }
+
+    private void guardarTarea(String titulo, String motivo, String hora, String fecha) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("Titulo", titulo);
+        values.put("Motivo", motivo);
+        values.put("Hora", hora); // Agregar la hora, aunque no está en la tabla
+        values.put("Fecha", fecha);
+
+        long newRowId = db.insert("Tareas", null, values);
+        if (newRowId != -1) {
+            Toast.makeText(this, "Tarea guardada exitosamente", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(NuevaTarea.this, LeerTarea.class);
+            startActivity(intent);
+            finish(); // Cerrar la actividad actual
+        } else {
+            Toast.makeText(this, "Error al guardar la tarea", Toast.LENGTH_SHORT).show();
+        }
+        db.close();
     }
 }

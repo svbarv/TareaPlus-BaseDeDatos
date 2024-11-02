@@ -21,4 +21,10 @@ public class MenuInteracion extends AppCompatActivity {
         Intent intent = new Intent(MenuInteracion.this, AgregarTarea.class);
         startActivity(intent);
     }
+
+    public void LeerTarea(View view) {
+        Intent intent = new Intent(MenuInteracion.this, LeerTarea.class); // Asegúrate de que ListaTareas sea la clase de tu actividad
+        startActivity(intent);
+    }
+
 }

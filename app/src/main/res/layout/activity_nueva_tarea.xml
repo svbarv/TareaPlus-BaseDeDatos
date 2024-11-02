@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".NuevaTarea"
-    android:background="@drawable/fondo2">
+    android:background="@drawable/fondo4">
 
     <!-- Fecha seleccionada -->
     <TextView
@@ -14,10 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:text="Fecha seleccionada:"
-        android:textColor="@color/white"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:textColor="@color/black" />
 
     <!-- Título de la tarea -->
     <TextView
@@ -26,20 +25,15 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Título:"
-        android:textColor="@color/white"
-        app:layout_constraintTop_toBottomOf="@id/selectedDateTextView"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:textColor="@color/black" />
 
     <EditText
         android:id="@+id/tituloEditText"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:hint="Ingresa el título"
-        android:textColor="@color/white"
-        app:layout_constraintStart_toEndOf="@id/tituloLabel"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/selectedDateTextView" />
+        android:textColor="@color/white" />
 
     <!-- Motivo de la tarea -->
     <TextView
@@ -48,32 +42,24 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Motivo:"
-        android:textColor="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tituloEditText" />
+        android:textColor="@color/black" />
 
     <EditText
         android:id="@+id/motivoEditText"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:hint="Ingresa el motivo"
-        android:textColor="@color/white"
-        app:layout_constraintStart_toEndOf="@id/motivoLabel"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tituloEditText" />
+        android:textColor="@color/white" />
 
     <!-- Botón para seleccionar la hora -->
-
     <Button
         android:id="@+id/horaButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
         android:text="Seleccionar hora"
-        android:textColor="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/motivoEditText" />
+        android:textColor="@color/white" />
 
     <!-- Botón para guardar la tarea -->
     <Button
@@ -82,7 +68,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="68dp"
         android:text="Guardar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/horaButton" />
+        android:textColor="@color/white" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
